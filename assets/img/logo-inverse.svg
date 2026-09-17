@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Guru Digital">
+  <g fill="none" stroke-width="9" stroke-linecap="butt">
+    <path stroke="#FFFFFF" d="M100 34 A66 66 0 0 0 100 166"/>
+    <path stroke="#FFFFFF" d="M62 100 H94 V166"/>
+    <path stroke="#ED0B6E" d="M106 34 A66 66 0 0 1 106 166"/>
+    <path stroke="#ED0B6E" d="M106 34 V166"/>
+  </g>
+</svg>

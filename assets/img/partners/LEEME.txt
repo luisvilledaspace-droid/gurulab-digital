@@ -1,0 +1,26 @@
+Logos de partners
+=================
+
+Coloca aqui los archivos con EXACTAMENTE estos nombres (index.html ya los busca):
+
+  chrono-sports.png   -> logo oscuro, va sobre recuadro BLANCO
+  gol-click.png       -> logo oscuro, va sobre recuadro BLANCO
+  partner-3.png       -> logo claro/blanco, va sobre recuadro OSCURO
+  partner-4.png       -> logo claro/blanco, va sobre recuadro OSCURO
+
+Mientras el archivo no exista, el recuadro muestra un marcador de posicion:
+nunca aparece una imagen rota.
+
+Fondo claro u oscuro
+--------------------
+Lo decide la clase del <li> en index.html:
+
+  <li class="partner partner--light">   fondo BLANCO   (para logos oscuros)
+  <li class="partner">                  fondo OSCURO   (para logos claros)
+
+Cambiar de uno a otro es agregar o quitar "partner--light".
+
+Formato
+-------
+PNG con fondo transparente (o SVG). Unos 400x160 px es suficiente:
+el logo se escala solo dentro de una caja de 148x54 px y nunca se recorta.
