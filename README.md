@@ -183,8 +183,44 @@ manteniendo los mismos nombres — el sitio los tomará sin más cambios.
 - El panel LED pausa su animación cuando sale de pantalla.
 - Sin librerías externas: solo se cargan las fuentes de Google Fonts.
 
-## Despliegue
+## Despliegue en cPanel con Git
 
-Cualquier hosting estático sirve: Netlify, Vercel, Cloudflare Pages, GitHub Pages
-o un hosting tradicional por FTP. Sube el contenido de la carpeta tal cual.
-Configura `404.html` como página de error del servidor.
+El sitio se publica desde GitHub usando **Git Version Control** de cPanel. El archivo
+`.cpanel.yml` le dice a cPanel qué copiar y a dónde:
+
+```yaml
+- export DEPLOYPATH=/home/heronzix/gurulab.digital/
+```
+
+Si el directorio público del dominio fuera otro, cambia solo esa línea.
+
+### Primera vez
+
+1. Crea un repositorio vacío en GitHub (público, sin README ni .gitignore).
+2. Conecta y sube desde esta carpeta:
+   ```bash
+   git remote add origin https://github.com/USUARIO/gurulab-digital.git
+   git push -u origin main
+   ```
+3. En cPanel → **Git Version Control** → **Create**:
+   - *Clone a Repository*: activado
+   - *Clone URL*: `https://github.com/USUARIO/gurulab-digital.git`
+   - *Repository Path*: `repositories/gurulab-digital` (**nunca** el directorio público)
+   - *Repository Name*: `Guru Digital`
+4. En la lista, **Manage** → pestaña **Pull or Deploy** → **Deploy HEAD Commit**.
+
+### Cada actualización
+
+```bash
+git add -A
+git commit -m "Descripción del cambio"
+git push
+```
+
+Luego en cPanel: **Manage** → **Pull or Deploy** → **Update from Remote** → **Deploy HEAD Commit**.
+
+### `.htaccess`
+
+Se despliega junto al sitio. Define `404.html` como página de error, caché de
+recursos estáticos y compresión. La redirección a HTTPS está comentada: actívala
+cuando AutoSSL haya emitido el certificado del dominio.
