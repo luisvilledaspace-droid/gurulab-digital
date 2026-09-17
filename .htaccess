@@ -6,8 +6,8 @@ RewriteEngine On
 # Redirigir gurulab.digital -> www.gurulab.digital conservando el esquema
 # (http sigue en http, https sigue en https). Excluye .well-known para que
 # AutoSSL pueda validar el dominio sin www al emitir el certificado.
-RewriteCond %{HTTP_HOST} ^gurulab.digital$ [NC]
-RewriteCond %{REQUEST_URI} !^/.well-known/
+RewriteCond %{HTTP_HOST} ^gurulab\.digital$ [NC]
+RewriteCond %{REQUEST_URI} !^/\.well-known/
 RewriteRule ^ %{REQUEST_SCHEME}://www.gurulab.digital%{REQUEST_URI} [L,R=301]
 
 # Forzar HTTPS. Descomenta estas dos líneas cuando el certificado SSL
