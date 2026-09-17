@@ -1,11 +1,19 @@
 # Página de error personalizada
 ErrorDocument 404 /404.html
 
-# Forzar HTTPS. Descomenta estas tres líneas cuando el certificado SSL
+RewriteEngine On
+
+# Redirigir gurulab.digital -> www.gurulab.digital conservando el esquema
+# (http sigue en http, https sigue en https). Excluye .well-known para que
+# AutoSSL pueda validar el dominio sin www al emitir el certificado.
+RewriteCond %{HTTP_HOST} ^gurulab.digital$ [NC]
+RewriteCond %{REQUEST_URI} !^/.well-known/
+RewriteRule ^ %{REQUEST_SCHEME}://www.gurulab.digital%{REQUEST_URI} [L,R=301]
+
+# Forzar HTTPS. Descomenta estas dos líneas cuando el certificado SSL
 # del dominio esté emitido (cPanel > SSL/TLS Status > AutoSSL).
-# RewriteEngine On
 # RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# RewriteRule ^ https://www.gurulab.digital%{REQUEST_URI} [L,R=301]
 
 # Caché del navegador para recursos estáticos
 <IfModule mod_expires.c>
