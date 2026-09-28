@@ -895,6 +895,96 @@ table.data { width: 100%; min-width: 560px; border-collapse: collapse; font-size
 .contact-direct { display: flex; flex-wrap: wrap; gap: 12px; }
 .contact-copy { display: grid; gap: 26px; }
 
+/* ---------- 20. Galería de soporte técnico ---------- */
+.shots {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+/* La primera foto manda: ocupa las dos filas de la izquierda */
+.shot--lead { grid-row: span 2; }
+
+.shot {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-l);
+  background: var(--surface-2);
+}
+.shot img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+  transition: transform .7s var(--ease), filter .5s var(--ease);
+}
+.shot--lead img { aspect-ratio: 4 / 5; }
+.shot:hover img { transform: scale(1.05); }
+
+/* Degradado para que el pie de foto se lea sobre cualquier imagen */
+.shot::before {
+  content: "";
+  position: absolute; inset: auto 0 0 0; height: 62%;
+  background: linear-gradient(to top, rgba(6, 6, 9, .92), rgba(6, 6, 9, .55) 45%, transparent);
+  pointer-events: none;
+}
+.shot figcaption {
+  position: absolute; inset: auto 0 0 0;
+  padding: 20px 22px;
+  display: grid; gap: 3px;
+  transform: translateY(6px);
+  transition: transform .45s var(--ease);
+}
+.shot:hover figcaption { transform: none; }
+.shot figcaption b {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1rem; color: #fff;
+}
+.shot figcaption span { font-size: .84rem; color: var(--text-soft); }
+
+/* Barrido tipo calibración de panel LED: recorre la foto una sola vez al aparecer */
+.shot::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      transparent 0%,
+      rgba(237, 11, 110, .05) 42%,
+      rgba(255, 77, 151, .55) 50%,
+      rgba(237, 11, 110, .05) 58%,
+      transparent 100%);
+  opacity: 0;
+  transform: translateY(-100%);
+}
+.shot.is-in::after { animation: escaneo 1.5s var(--ease) .25s 1; }
+@keyframes escaneo {
+  0%   { opacity: 0; transform: translateY(-100%); }
+  12%  { opacity: 1; }
+  88%  { opacity: 1; }
+  100% { opacity: 0; transform: translateY(100%); }
+}
+
+/* Cada foto entra un poco después que la anterior */
+.shots .shot:nth-child(2) { transition-delay: .12s; }
+.shots .shot:nth-child(3) { transition-delay: .24s; }
+.shots .shot:nth-child(2).is-in::after { animation-delay: .37s; }
+.shots .shot:nth-child(3).is-in::after { animation-delay: .49s; }
+
+.shots__notas { margin-top: clamp(28px, 4vw, 42px); }
+
+@media (max-width: 760px) {
+  .shots { grid-template-columns: 1fr; }
+  .shot--lead { grid-row: auto; }
+  .shot--lead img { aspect-ratio: 16 / 10; }
+  .shot figcaption { transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shot.is-in::after { animation: none; }
+  .shot:hover img { transform: none; }
+}
+
 /* ---------- 19. Partners ---------- */
 .partners-grid {
   list-style: none; margin: 0; padding: 0;
