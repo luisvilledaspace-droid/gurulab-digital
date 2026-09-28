@@ -2,9 +2,13 @@
 # Despliegue automático de cPanel (Git Version Control > Pull or Deploy).
 # Copia los archivos del repositorio al directorio público del dominio.
 # Si el docroot de gurulab.digital fuera otro, cambia solo DEPLOYPATH.
+#
+# Nota: "cp -R assets destino/" anidaría assets/assets a partir del segundo
+# despliegue. Por eso se copia el CONTENIDO (assets/.) dentro de destino/assets.
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/heronzix/gurulab.digital/
-    - /bin/cp -R *.html $DEPLOYPATH
-    - /bin/cp -R assets $DEPLOYPATH
-    - /bin/cp robots.txt sitemap.xml .htaccess $DEPLOYPATH
+    - export DEPLOYPATH=/home/heronzix/gurulab.digital
+    - /bin/mkdir -p $DEPLOYPATH/assets
+    - /bin/cp -f *.html $DEPLOYPATH/
+    - /bin/cp -f robots.txt sitemap.xml .htaccess $DEPLOYPATH/
+    - /bin/cp -Rf assets/. $DEPLOYPATH/assets/
