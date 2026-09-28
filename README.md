@@ -83,9 +83,11 @@ También funciona abriendo `index.html` directamente en el navegador.
 Busca `TODO:` en los archivos HTML. Queda por definir:
 
 - **Enlaces de redes sociales** en el pie (`href="#"` en LinkedIn, Instagram y YouTube).
-- **Dominio final:** todas las etiquetas `canonical`, Open Graph, el JSON-LD y el
-  `sitemap.xml` apuntan a `https://www.gurulab.digital`, deducido de tu correo.
-  Si el dominio del sitio es otro, hay que reemplazarlo.
+- **Dominio sin www:** el certificado SSL del hosting cubre `gurulab.digital` pero no
+  `www.gurulab.digital`, así que esa es la dirección oficial: `canonical`, Open Graph,
+  JSON-LD, `sitemap.xml` y el `.htaccess` redirigen ahí. Si Namecheap reemite el
+  certificado cubriendo ambos nombres, se puede invertir cambiando `SITE` y la regla
+  del `.htaccess`.
 - **Páginas legales** (privacidad, términos, tratamiento de datos) si las necesitas:
   hoy el pie enlaza a Proceso, FAQ y Contacto en su lugar.
 
