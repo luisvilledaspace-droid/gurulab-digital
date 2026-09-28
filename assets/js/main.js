@@ -265,7 +265,69 @@
     else img.addEventListener('error', fallback);
   });
 
-  /* ---------- 9. Formulario de contacto ---------- */
+  /* ---------- 9. Visor de la galería ---------- */
+  var visor = document.getElementById('visor');
+  if (visor) {
+    var botones = [].slice.call(document.querySelectorAll('.galeria__btn'));
+    var visorImg = document.getElementById('visorImg');
+    var visorTitulo = document.getElementById('visorTitulo');
+    var visorPie = document.getElementById('visorPie');
+    var visorContador = document.getElementById('visorContador');
+    var actual = 0;
+    var origen = null;
+
+    function pintar(i) {
+      actual = (i + botones.length) % botones.length;
+      var b = botones[actual];
+      visorImg.src = b.dataset.full;
+      visorImg.alt = b.querySelector('img').alt;
+      visorTitulo.textContent = b.dataset.titulo;
+      visorPie.textContent = b.dataset.pie;
+      visorContador.textContent = (actual + 1) + ' / ' + botones.length;
+    }
+
+    function abrir(i, disparador) {
+      origen = disparador;
+      pintar(i);
+      visor.hidden = false;
+      document.body.style.overflow = 'hidden';
+      document.getElementById('visorNext').focus();
+    }
+
+    function cerrar() {
+      visor.hidden = true;
+      visorImg.src = '';
+      document.body.style.overflow = '';
+      // Devuelve el foco a la miniatura desde la que se abrió
+      if (origen) { origen.focus(); origen = null; }
+    }
+
+    botones.forEach(function (b, i) {
+      b.addEventListener('click', function () { abrir(i, b); });
+    });
+
+    visor.addEventListener('click', function (e) {
+      if (e.target.closest('[data-cerrar]')) cerrar();
+    });
+    document.getElementById('visorPrev').addEventListener('click', function () { pintar(actual - 1); });
+    document.getElementById('visorNext').addEventListener('click', function () { pintar(actual + 1); });
+
+    document.addEventListener('keydown', function (e) {
+      if (visor.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); cerrar(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); pintar(actual - 1); }
+      else if (e.key === 'ArrowRight') { e.preventDefault(); pintar(actual + 1); }
+      else if (e.key === 'Tab') {
+        // Mantiene el foco dentro del visor mientras está abierto
+        var foco = visor.querySelectorAll('button');
+        var primero = foco[0], ultimo = foco[foco.length - 1];
+        if (e.shiftKey && document.activeElement === primero) { e.preventDefault(); ultimo.focus(); }
+        else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primero.focus(); }
+      }
+    });
+  }
+
+  /* ---------- 10. Formulario de contacto ---------- */
   /* Sin backend: valida y muestra confirmación.
      Para producción, conecta aquí tu endpoint (fetch a tu API,
      Formspree, Netlify Forms, etc.) o define ENDPOINT abajo. */
