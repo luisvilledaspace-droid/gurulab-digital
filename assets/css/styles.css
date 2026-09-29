@@ -942,34 +942,9 @@ table.data { width: 100%; min-width: 560px; border-collapse: collapse; font-size
 }
 .shot figcaption span { font-size: .84rem; color: var(--text-soft); }
 
-/* Barrido tipo calibración de panel LED: recorre la foto una sola vez al aparecer */
-.shot::after {
-  content: "";
-  position: absolute; inset: 0;
-  pointer-events: none;
-  background:
-    linear-gradient(to bottom,
-      transparent 0%,
-      rgba(237, 11, 110, .05) 42%,
-      rgba(255, 77, 151, .55) 50%,
-      rgba(237, 11, 110, .05) 58%,
-      transparent 100%);
-  opacity: 0;
-  transform: translateY(-100%);
-}
-.shot.is-in::after { animation: escaneo 1.5s var(--ease) .25s 1; }
-@keyframes escaneo {
-  0%   { opacity: 0; transform: translateY(-100%); }
-  12%  { opacity: 1; }
-  88%  { opacity: 1; }
-  100% { opacity: 0; transform: translateY(100%); }
-}
-
 /* Cada foto entra un poco después que la anterior */
 .shots .shot:nth-child(2) { transition-delay: .12s; }
 .shots .shot:nth-child(3) { transition-delay: .24s; }
-.shots .shot:nth-child(2).is-in::after { animation-delay: .37s; }
-.shots .shot:nth-child(3).is-in::after { animation-delay: .49s; }
 
 .shots__notas { margin-top: clamp(28px, 4vw, 42px); }
 
@@ -981,7 +956,6 @@ table.data { width: 100%; min-width: 560px; border-collapse: collapse; font-size
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .shot.is-in::after { animation: none; }
   .shot:hover img { transform: none; }
 }
 
